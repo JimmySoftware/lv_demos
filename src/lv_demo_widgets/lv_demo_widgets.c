@@ -59,6 +59,7 @@ static lv_style_t style_box;
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+void btn_boot_ota_cb(struct _lv_obj_t * obj, lv_event_t event);
 
 void lv_demo_widgets(void)
 {
@@ -68,11 +69,19 @@ void lv_demo_widgets(void)
         lv_disp_size_t disp_size = lv_disp_get_size_category(NULL);
         if(disp_size >= LV_DISP_SIZE_MEDIUM) {
             lv_obj_set_style_local_pad_left(tv, LV_TABVIEW_PART_TAB_BG, LV_STATE_DEFAULT, LV_HOR_RES / 2);
+
+            lv_obj_t * bt = lv_btn_create(lv_scr_act(), NULL);
+            lv_obj_set_pos(bt, LV_DPX(10), LV_DPX(10));
+            lv_obj_set_size(bt, 80, 40 );
+            lv_obj_t * lb = lv_label_create(bt, NULL);
+            lv_label_set_text( lb, "Home" );
+            lv_obj_set_event_cb(bt, btn_boot_ota_cb);             
+
             lv_obj_t * sw = lv_switch_create(lv_scr_act(), NULL);
             if(lv_theme_get_flags() & LV_THEME_MATERIAL_FLAG_DARK)
                 lv_switch_on(sw, LV_ANIM_OFF);
             lv_obj_set_event_cb(sw, color_chg_event_cb);
-            lv_obj_set_pos(sw, LV_DPX(10), LV_DPX(10));
+            lv_obj_set_pos(sw, LV_DPX(120), LV_DPX(18));
             lv_obj_set_style_local_value_str(sw, LV_SWITCH_PART_BG, LV_STATE_DEFAULT, "Dark");
             lv_obj_set_style_local_value_align(sw, LV_SWITCH_PART_BG, LV_STATE_DEFAULT, LV_ALIGN_OUT_RIGHT_MID);
             lv_obj_set_style_local_value_ofs_x(sw, LV_SWITCH_PART_BG, LV_STATE_DEFAULT, LV_DPI/35);
